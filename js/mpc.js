@@ -84,22 +84,26 @@ mpcDisplay = Class.extend({
             $(this).removeClass('soundBtnActive');
         })
     },
+    /**
+     * Initialize CreateJS: Preload JS & Sound JS
+     */
     initCreateJs: function(){
         var that = this;
+        // Set location of FlashAudioPlugin.swf in relation to SoundJS.js
         createjs.FlashPlugin.BASE_PATH = './';
-        if (!createjs.SoundJS.checkPlugin(true)) {
+        // Determine if SoundJS has been initialized.  If not, initialize it.
+        if (!soundjs.checkPlugin(true)) {
             console.error('createjs error');
             return;
         }
+        // Initialize local preload js
         this.preload = new createjs.PreloadJS();
         //Install SoundJS as a plugin, then PreloadJS will initialize it automatically.
-        this.preload.installPlugin(createjs.SoundJS);
+        this.preload.installPlugin(soundjs);
 
-        //Available PreloadJS callbacks
+        // On completion of loading for each sound file
         this.preload.onFileLoad = function(event) {
-            // Show the icon on loaded items.
-//            var div = document.getElementById(event.id);
-//            div.style.backgroundImage = "url('assets/audioButtonSheet.png')";
+            console.log(event);
             that.soundBank[event.id-1].audioFile = event.result;
         };
         this.preload.onComplete = function(event) {
@@ -157,10 +161,12 @@ mpcDisplay = Class.extend({
             $('#soundTitle').fadeOut('fast',function(){
                 $('#soundTitle').text(target.soundTitle).fadeIn('fast');
             });
-            $('#soundLength').text(convertMS(instance.getDuration()));
+            if (!target.sLength)
+                target.sLength = instance.getDuration();
+            $('#soundLength').text(convertMS(target.sLength));
         }
         this.currentInterval = window.setInterval(function(){
-            $('#soundPos').text(((instance.getPosition()/instance.getDuration()).toFixed(2)*100).toFixed(0) + '%');
+            $('#soundPos').text(((instance.getPosition()/target.sLength).toFixed(2)*100).toFixed(0) + '%');
         },100);
         target.isPlaying = true;
 //        this.waveforms.showWaveformProgress(this.currentInstance);
