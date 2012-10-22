@@ -145,6 +145,7 @@ mpcDisplay = Class.extend({
 
         $(document).keydown(function(e){
             var keyPressed = that.keycodeToCell(e.keyCode);
+            console.log(e.keyCode);
             if(keyPressed){
                 if(!that.soundBank[keyPressed-1].isDown){
                     that.soundBank[keyPressed-1].isDown = true;
@@ -258,6 +259,10 @@ mpcDisplay = Class.extend({
      */
     keycodeToCell: function(keyPressed){
     var keyCellVals = {
+        49: 1,
+        50: 2,
+        51: 3,
+        52: 4,
         81: 5,
         87: 6,
         69: 7,
