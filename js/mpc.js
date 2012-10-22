@@ -243,6 +243,7 @@ mpcDisplay = Class.extend({
         this.waveforms = Waveform({
             fileArray: fileArray,
             canvas: $('#waveform'),
+            status: $('#status'),
             onStatus: function(x) {
 //                $('#status').text('Loading '+Math.floor(x*100)+'%')
             },

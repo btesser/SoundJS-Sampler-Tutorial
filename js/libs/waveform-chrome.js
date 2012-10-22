@@ -8,13 +8,14 @@ var mpcDisplay, waveformElements = {
     var canvas, file, loadBuffer, onReady, onStatus, req, sections, self, status, that = this;
     this.reqs = [];
     this.bufs = [];
+    // Changed file variable to an array in order to allow for preloading.
     var fileArray = _arg.fileArray, canvas = _arg.canvas, onStatus = _arg.onStatus, onReady = _arg.onReady;
     canvas = $(canvas);
     status = $(status);
     sections = canvas.attr('width');
-      $.extend(waveformElements,{canvas: $('#waveform'),
-        sections: $('#waveform').attr('width'),
-        status: $('#status')
+      $.extend(waveformElements,{canvas: canvas,
+        sections: sections,
+        status: status
     });
     this.canvas = canvas;
       $.each(fileArray,function(){
