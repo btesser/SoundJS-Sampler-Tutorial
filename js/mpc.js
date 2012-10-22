@@ -251,6 +251,11 @@ mpcDisplay = Class.extend({
         })
     },
 
+    /**
+     * Convert Keycode to corresponding cell
+     * @param keyPressed Keycode of pressed button
+     * @return {Integer|Boolean} ID of cell / False if invalid key
+     */
     keycodeToCell: function(keyPressed){
     var keyCellVals = {
         81: 5,
