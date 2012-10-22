@@ -120,7 +120,7 @@ mpcDisplay = Class.extend({
             });
 //            document.getElementById("loader").className = "";
 
-        }
+        };
 
         //Load the manifest and pass 'true' to start loading immediately. Otherwise, you can call load() manually.
         this.preload.loadManifest(soundLibrary.manifest, true);
@@ -213,11 +213,6 @@ mpcDisplay = Class.extend({
     processInput:function(keyCode){
         var btnKey = this.soundBank[keyCode - 1];
 
-//        if(this.lastSoundBtn != null){
-//
-//            this.soundBank[this.lastSoundBtn].element.removeClass('soundBtnActive');
-//        }
-
         btnKey.element.addClass('playing');
         this.pulseButton(btnKey);
         this.lastSoundBtn = btnKey.element.attr('data-button');
@@ -275,7 +270,7 @@ mpcDisplay = Class.extend({
         88: 14,
         67: 15,
         86: 16
-    }
+    };
     return keyCellVals[keyPressed] || false;
 }
 });
