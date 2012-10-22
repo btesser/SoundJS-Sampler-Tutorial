@@ -103,15 +103,42 @@ mpcDisplay = Class.extend({
 
         // On completion of loading for each sound file
         this.preload.onFileLoad = function(event) {
-            console.log(event);
+            console.log('loaded');
+            // Assign associated audio file to the pad library after loading completed
             that.soundBank[event.id-1].audioFile = event.result;
+            that.soundBank[event.id-1].element.addClass('playing');
+
         };
         this.preload.onComplete = function(event) {
+            $('.soundBtn').removeClass('playing',1000,'swing',function(){
+                $('.soundBtn').addClass('playing',1000,'swing',function(){
+                    $('.soundBtn').removeClass('playing');
+                    $('#loadingMsg').fadeOut();
+                });
+
+
+            });
 //            document.getElementById("loader").className = "";
+
         }
 
         //Load the manifest and pass 'true' to start loading immediately. Otherwise, you can call load() manually.
         this.preload.loadManifest(soundLibrary.manifest, true);
+    },
+    initLoadAnimation: function(){
+        this.loadNextAnim(0,this.soundBank.length);
+    },
+    loadNextAnim: function(i, len){
+        var that = this;
+        window.setTimeout(function(){
+            console.log(i,len);
+            if(i+1<len){
+                that.loadNextAnim(i+1,len);
+            }
+            else {
+            }
+
+        }, 500);
     },
     initKeyHandlers:function(){
         var that = this;
@@ -197,10 +224,11 @@ mpcDisplay = Class.extend({
         this.padNum.text(keyCode);
         this.playSound(btnKey);
     },
-    pulseButton:function(button){
+    pulseButton:function(button, initialPulse){
         var that = this;
+        console.log(button, button.element);
         $('div',button.element).effect('pulsate','easeInOutBack',1000,function(){
-            if(button.isPlaying)
+            if(button.isPlaying || initialPulse)
                 that.pulseButton(button);
             else
                 return;
