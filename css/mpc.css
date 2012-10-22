@@ -8,10 +8,11 @@ html{
     background: #D5D5D5;
 }
 
+/* The background of the MPC, including CSS3 gradient for metallic sheen */
 .mpc-wrapper {
     border: 3px solid black;
     border-radius: 10px;
-    height: 600px;
+    height: 604px;
     width: 438px;
     background-color: black;
     background-image:-webkit-linear-gradient(-53deg,rgba(255, 255, 255, .3) 0% , rgba(255, 255, 255, .5) 50% , transparent 98%, transparent 100% ),-webkit-linear-gradient(black 100%, #AAA 20%);
@@ -26,6 +27,7 @@ html{
     float: left;
 }
 
+/* The entire display area */
 #displayField {
     font-family:"digital7";
     border: 3px solid black;
@@ -40,6 +42,7 @@ html{
     box-shadow: 0px 5px 10px 0px rgba(0,0,0,0.5) inset;
 }
 
+/* Controls the top row of the display */
 #titleDisplay {
     font-size: 40px;
     height: 24%;
@@ -47,7 +50,7 @@ html{
     border-bottom: 1px solid #DBD2E7;
     background: url(../images/title-bg.png);
     background-repeat: repeat-x;
-    background-position-y: 2px;
+    background-position-y: 6px;
 }
 
 #titleDisplay>div{
