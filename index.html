@@ -1,0 +1,135 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+        "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+    <title></title>
+    <link rel="stylesheet" href="css/mpc.css"/>
+    <script type="text/javascript" src="http://code.createjs.com/soundjs-0.3.0.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.8.1/jquery.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.8.23/jquery-ui.min.js"></script>
+    <script type="text/javascript" src="js/libs/preloadjs-0.2.0.min.js"></script>
+    <script type="text/javascript" src="js/libs/SoundJS.js"></script>
+    <script type="text/javascript" src="js/libs/HTMLAudioPlugin.js"></script>
+    <script type="text/javascript" src="js/libs/swfobject.js"></script>
+    <script type="text/javascript" src="js/libs/FlashPlugin.js"></script>
+    <script src="js/libs/class.js" type="text/javascript"></script>
+    <script src="js/libs/waveform-chrome.js" type="text/javascript"></script>
+    <script type="text/javascript" src="js/mpc.js"></script>
+</head>
+<body>
+    <div id="wrapper">
+        <div class="mpc-wrapper">
+            <div id="displayField">
+                <div id="titleDisplay">
+                    <div id="soundTitle"></div>
+                    <div id="volume"></div>
+                    <div id="padNum"></div>
+                </div>
+                <div id="waveformDisplay">
+                    <canvas id="waveform" width="400" height="50"></canvas>
+                    <div id="soundPos"></div>
+                    <div id="soundLength"></div>
+                </div>
+                <div id="modBtnDisplay">
+                    <div class="displayOverflow" id="modDisplay1"></div>
+                    <div class="displayOverflow" id="modDisplay2"></div>
+                    <div class="displayOverflow" id="modDisplay3"></div>
+                </div>
+            </div>
+            <div id="buttonDrawArea">
+                <div id="subBtnDrawArea">
+                    <div id="softBtns">
+                        <a><div class="btns modBtn" data-button="soft1"></div></a>
+                        <a><div class="btns modBtn" data-button="soft2"></div></a>
+                        <a><div class="btns modBtn" data-button="soft3"></div></a>
+                    </div>
+                    <div id="modBtns">
+                        <a id="leftMod"><div class="btns modBtn" data-button="edit"></div></a>
+                        <a id="rightMod"><div class="btns modBtn" data-button="play"></div></a>
+                    </div>
+                    <div id="logo">
+                    </div><div id="padMonster" style="
+    font-weight: 100;
+    font-style: normal;
+">PAD<span class="lightText">monster</span></div>
+                </div>
+                <div id="soundBtnDrawArea">
+                    <div class="btnRow" id="row1"><a>
+                        <div class="btns soundBtn" data-button="1">
+                            <div></div>
+                        </div>
+                    </a><a>
+                        <div class="btns soundBtn" data-button="2">
+                            <div></div>
+                        </div>
+                    </a><a>
+                        <div class="btns soundBtn" data-button="3">
+                            <div></div>
+                        </div>
+                    </a><a>
+                        <div class="btns soundBtn" data-button="4">
+                            <div></div>
+                        </div>
+                    </a><span style="width:100%;display:inline-block;"></span></div>
+                    <div class="btnRow" id="row2"><a>
+                        <div class="btns soundBtn" data-button="5">
+                            <div></div>
+                        </div>
+                    </a><a>
+                        <div class="btns soundBtn" data-button="6">
+                            <div></div>
+                        </div>
+                    </a><a>
+                        <div class="btns soundBtn" data-button="7">
+                            <div></div>
+                        </div>
+                    </a><a>
+                        <div class="btns soundBtn" data-button="8">
+                            <div></div>
+                        </div>
+                    </a><span style="width:100%;display:inline-block;"></span></div>
+                    <div class="btnRow" id="row3"><a>
+                        <div class="btns soundBtn" data-button="9">
+                            <div></div>
+                        </div>
+                    </a><a>
+                        <div class="btns soundBtn" data-button="10">
+                            <div></div>
+                        </div>
+                    </a><a>
+                        <div class="btns soundBtn" data-button="11">
+                            <div></div>
+                        </div>
+                    </a><a>
+                        <div class="btns soundBtn" data-button="12">
+                            <div></div>
+                        </div>
+                    </a><span style="width:100%;display:inline-block;"></span></div>
+                    <div class="btnRow" id="row4"><a>
+                        <div class="btns soundBtn" data-button="13">
+                            <div></div>
+                        </div>
+                    </a><a>
+                        <div class="btns soundBtn" data-button="14">
+                            <div></div>
+                        </div>
+                    </a><a>
+                        <div class="btns soundBtn" data-button="15">
+                            <div></div>
+                        </div>
+                    </a><a>
+                        <div class="btns soundBtn" data-button="16">
+                            <div></div>
+                        </div>
+                    </a>
+                        <span style="width:100%;display:inline-block;"></span></div>
+                </div>
+            </div>
+        </div>
+
+        <div id="tutDescription">
+            Blah blah blah blah
+        </div>
+    </div>
+</body>
+</html>
