@@ -12,7 +12,7 @@ var mpcDisplay, waveformElements = {
     this.bufs = [];
     // Changed file variable to an array in order to allow for preloading.
     var fileArray = _arg.fileArray, canvas = _arg.canvas, onStatus = _arg.onStatus, onReady = _arg.onReady,
-        colorOne = _arg.colorOne, colorTwo = _arg.colorTwo;
+        colorOne = _arg.colorOne, colorTwo = _arg.colorTwo, loadingCallback = _arg.loadingCallback;
     canvas = $(canvas);
     status = $(status);
     sections = canvas.attr('width');
@@ -24,6 +24,9 @@ var mpcDisplay, waveformElements = {
     });
     this.canvas = canvas;
       // rather than load an individual file, preload all audio files
+    this.numFiles = fileArray.length;
+    this.numFilesLoaded = 0;
+    this.doneLoading = false;
       $.each(fileArray,function(){
           var currentReq;
           currentReq = new XMLHttpRequest();
@@ -36,12 +39,17 @@ var mpcDisplay, waveformElements = {
           currentReq.onload = function() {
               // add request to requests array
               that.reqs.push(currentReq);
+              that.numFilesLoaded++;
+              if (that.numFilesLoaded >= that.numFiles){
+                that.doneLoading = true;
+                loadingCallback();
+              }
               return loadBuffer(currentReq.response);
           };
           // initialize the request
           currentReq.send();
 
-      })
+      });
 
     loadBuffer = function(arr) {
 
@@ -50,12 +58,7 @@ var mpcDisplay, waveformElements = {
       audio = new webkitAudioContext();
       buf = audio.createBuffer(arr, true);
 // Disable internal playback in favor of Sound JS for playback
-//      ProcessAudio.extract(buf.getChannelData(0), sections, self.view.drawBar);
-//      self.playback = PlayBuffer(audio, buf);
-//      self.view.onCursor = self.playback.playAt;
-//      setInterval(function() {
-//        return self.view.moveCursor(self.playback.getTime() / buf.duration);
-//      }, 100);
+
         // Add buffer to array of buffers
         waveformElements.bufs.push(buf);
         return typeof onReady === "function" ? onReady() : void 0;
@@ -63,6 +66,7 @@ var mpcDisplay, waveformElements = {
 //    this.self = self;
     return this;
   };
+
 /**
  * Modified original drawing to allow for the id and soundInstance to be passed.  This allows waveform-chrome to
  * display progress of the soundJs instance
@@ -70,6 +74,7 @@ var mpcDisplay, waveformElements = {
  * @param soundInstance
  */
   this.drawSpecifiedWaveform = function(id, soundDuration){
+      // Start ID at 0 rather than 1
       id-=1;
       self = {
           view: WaveformView(waveformElements.canvas)
@@ -91,60 +96,65 @@ var mpcDisplay, waveformElements = {
     _ref = canvas[0], width = _ref.width, height = _ref.height;
       var context;
           context = canvas[0].getContext('2d');
-
-
     ctx = canvas[0].getContext('2d');
 
-    cursor = $("<div style=\"\n  position: relative;\n  height: " + height + "px;\n  width: 2px;\n  background-color: blue;\">");
-//    overlay = $("<div style=\"\n  position: relative;\n  top: -" + height + "px;\n  height: 0px;\">");
-//    overlay.append(cursor);
-//    canvas.after(overlay);
-    canvas.click(function(e) {
-      var mx;
-      mx = e.pageX - this.offsetLeft;
-      cursor.css('left', mx);
-      return typeof self.onCursor === "function" ? self.onCursor(mx / width) : void 0;
-    });
     return self = {
+      /**
+       * Draw the progress bar
+       * @param i X start point
+       * @param val Amplitude
+       * @return {*} Canvas fillRect results
+       */
       drawBar: function(i, val) {
         console.log('drawbar');
         var h;
         h = val * 50 * height;
         ctx.fillStyle = waveformElements.colorOne;
         return ctx.fillRect(i, height / 2 - h / 2, 1, h);
-      },
-      moveCursor: function(pos) {
-        return cursor.css('left', pos * width);
       }
     };
   };
+/**
+ * Set up interval to draw progress on the waveform
+ * @param soundDuration Length in ms of sound being played
+ * @return {Integer} The interval identifier
+ */
   this.showWaveformProgress = function(soundDuration){
-      console.log('duration'+soundDuration);
       var canvas = waveformElements.canvas;
       var ctx, cursor, height, overlay, self, width, _ref;
       _ref = canvas[0], width = _ref.width, height = _ref.height;
+      // The length in ms of the interval is equal to the length of the soundfile over the width of the canvas
       var intervalLen =  soundDuration / width;
-      console.log(intervalLen,soundDuration,width);
 
       var i = 0;
-      waveformElements.progressInterval  = window.setInterval(function(){
+      waveformElements.progressInterval = window.setInterval(function(){
+          // If at end of canvas stop interval
           if(i >= waveformElements.wfArray.length)
               window.clearInterval(waveformElements.progressInterval);
+          // Draw progress
           drawProgress(i,height);
           i++;
       },intervalLen);
       return waveformElements.progressInterval;
   }
+/**
+ * Draw progress on the canvas
+ * @param i X start point
+ * @param height the height of the canvas
+ */
   this.drawProgress = function(i,height){
       var canvas = waveformElements.canvas,
       ctx = canvas[0].getContext('2d'),
       h;
+      // Set fill color to be the foreground color
       ctx.fillStyle = waveformElements.colorOne;
+      // Fill background with foreground color (for contrast)
       ctx.fillRect(i,0,1,height);
+      // Set fill color to be background color
       ctx.fillStyle = waveformElements.colorTwo;
+      // Draw waveform in contrasting colors
       h = waveformElements.wfArray[i] * 50 * height;
       ctx.fillRect(i, height / 2 - h / 2, 1, h);
-
   }
   this.PlayBuffer = function(audio, buffer) {
     var node, paused, self, start, timeBasis, timeStart;
@@ -214,9 +224,6 @@ var mpcDisplay, waveformElements = {
         return _results;
       };
       return int = setInterval(f, 1);
-    },
-    progressExtract:function(buffer, sections, out, done){
-
     },
     measure: function(a, b, data) {
       var i, s, sum, _ref;

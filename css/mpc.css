@@ -251,6 +251,18 @@ html{
     height: 355px;
     padding: 0;
 }
+#soundBtnDrawArea.loading .soundBtn.loaded div{
+    height: 100%;
+    width: 100%;
+    background-image: url(data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciPjxyYWRpYWxHcmFkaWVudCBpZD0iZyI+PHN0b3Agb2Zmc2V0PSIwLjMwMjQ2OSIgc3RvcC1jb2xvcj0iI2Y1YzEwYSIvPjxzdG9wIG9mZnNldD0iMSIgc3RvcC1jb2xvcj0icmdiYSgxODksIDE4OSwgMTg5LCAwLjcpIi8+PC9yYWRpYWxHcmFkaWVudD48cmVjdCB4PSIwJSIgeT0iMCUiIHdpZHRoPSIxMDAlIiBoZWlnaHQ9IjEwMCUiIGZpbGw9InJnYmEoMTg5LCAxODksIDE4OSwgMC43KSIgLz48cmVjdCB4PSItMzElIiB5PSItMTA4LjUwODYlIiB3aWR0aD0iMTYyJSIgaGVpZ2h0PSIzMTcuMDE3MiUiIGZpbGw9InVybCgjZykiIC8+PC9zdmc+);
+    background-image: -webkit-gradient(radial, 50% 50%, 0, 50% 50%, 184, color-stop(30.2469%, #f5c10a), color-stop(100%, rgba(189, 189, 189, 0.7)));
+    background-image: -webkit-radial-gradient(center center, farthest-side circle, #f5c10a 49%, rgba(189, 189, 189, 0.7) 162%);
+    background-image: -moz-radial-gradient(center center, farthest-side circle, #f5c10a 49%, rgba(189, 189, 189, 0.7) 162%);
+    background-image: -ms-radial-gradient(center center, farthest-side circle, #f5c10a 49%, rgba(189, 189, 189, 0.7) 162%);
+    background-image: -o-radial-gradient(center center, farthest-side circle, #f5c10a 49%, rgba(189, 189, 189, 0.7) 162%);
+    background-image: radial-gradient(farthest-side circle at center center, #f5c10a 49%, rgba(189, 189, 189, 0.7) 162%);
+
+}
 
 /* The 16 buttons were divided into four rows of four button divs each */
 .btnRow {

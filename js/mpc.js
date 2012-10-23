@@ -37,7 +37,7 @@ mpcDisplay = Class.extend({
     currentInstance: null, // Holds current SoundInstance of most recently played sound
     currentId: null, // Current ID of most recently played sound
     preload: undefined, // Holds PreloadJS Instantiation
-
+    preloadDone: false,
     soundBank: [], // Holds data for each pad and all associated sounds
     lastSoundBtn: null, // Last sound button pressed
     /**
@@ -106,24 +106,35 @@ mpcDisplay = Class.extend({
             console.log('loaded');
             // Assign associated audio file to the pad library after loading completed
             that.soundBank[event.id-1].audioFile = event.result;
-            that.soundBank[event.id-1].element.addClass('playing');
+            that.soundBank[event.id-1].element.addClass('loaded');
 
         };
         this.preload.onComplete = function(event) {
-            $('.soundBtn').removeClass('playing',1000,'swing',function(){
-                $('.soundBtn').addClass('playing',1000,'swing',function(){
-                    $('.soundBtn').removeClass('playing');
-                    $('#loadingMsg').fadeOut();
-                });
-
-
-            });
+          that.preloadDone = true;
+            that.doneLoading();
 //            document.getElementById("loader").className = "";
 
         };
 
         //Load the manifest and pass 'true' to start loading immediately. Otherwise, you can call load() manually.
         this.preload.loadManifest(soundLibrary.manifest, true);
+    },
+    doneLoading: function(){
+      console.log(this);
+      console.log('sup');
+      if (this.waveforms.doneLoading && this.preloadDone) {
+      $('.soundBtn').removeClass('loaded', 1000, 'swing', function () {
+        $('.soundBtn').addClass('loaded', 1000, 'swing', function () {
+          console.log('lastplaying');
+          console.log(this);
+          $('.soundBtn').removeClass('loaded');
+          $('#soundBtnDrawArea').removeClass('loading');
+          $('#loadingMsg').fadeOut();
+        });
+
+
+      });
+      }
     },
     initLoadAnimation: function(){
         this.loadNextAnim(0,this.soundBank.length);
@@ -215,15 +226,15 @@ mpcDisplay = Class.extend({
         var btnKey = this.soundBank[keyCode - 1];
 
         btnKey.element.addClass('playing');
-        this.pulseButton(btnKey);
         this.lastSoundBtn = btnKey.element.attr('data-button');
 
         this.padNum.text(keyCode);
         this.playSound(btnKey);
+        this.pulseButton(btnKey);
     },
     pulseButton:function(button, initialPulse){
         var that = this;
-        console.log(button, button.element);
+        console.log('pb',button,button.isPlaying);
         $('div',button.element).effect('pulsate','easeInOutBack',1000,function(){
             if(button.isPlaying || initialPulse)
                 that.pulseButton(button);
@@ -239,9 +250,12 @@ mpcDisplay = Class.extend({
         this.waveforms = Waveform({
             fileArray: fileArray,
             canvas: $('#waveform'),
-            status: $('#status'),
+            status: $('#status'), // Status div for
             colorOne: '#DBD2E8',
             colorTwo: '#7857A5',
+            loadingCallback: function(){
+
+            },
             onStatus: function(x) {
 //                $('#status').text('Loading '+Math.floor(x*100)+'%')
             },
@@ -279,9 +293,11 @@ mpcDisplay = Class.extend({
 }
 });
 
-
-
-
+/**
+ * Convert milliseconds to MM:SS format
+ * @param ms
+ * @return {String}
+ */
 function convertMS(ms) {
     var x = new Date(ms);
     return ((x.getMinutes()<10) ? "0": "") + x.getMinutes() + ':' + ((x.getSeconds()<10) ? "0" : "") + x.getSeconds();
