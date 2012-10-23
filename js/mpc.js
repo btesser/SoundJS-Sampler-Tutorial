@@ -106,22 +106,23 @@ mpcDisplay = Class.extend({
             console.log('loaded');
             // Assign associated audio file to the pad library after loading completed
             that.soundBank[event.id-1].audioFile = event.result;
+            // Add class to light button
             that.soundBank[event.id-1].element.addClass('loaded');
 
         };
         this.preload.onComplete = function(event) {
           that.preloadDone = true;
-            that.doneLoading();
-//            document.getElementById("loader").className = "";
-
+          // Run loadingComplete function
+          that.doneLoading();
         };
 
         //Load the manifest and pass 'true' to start loading immediately. Otherwise, you can call load() manually.
         this.preload.loadManifest(soundLibrary.manifest, true);
     },
+  /**
+   * Loading complete callback
+   */
     doneLoading: function(){
-      console.log(this);
-      console.log('sup');
       if (this.waveforms.doneLoading && this.preloadDone) {
       $('.soundBtn').removeClass('loaded', 1000, 'swing', function () {
         $('.soundBtn').addClass('loaded', 1000, 'swing', function () {
@@ -135,21 +136,6 @@ mpcDisplay = Class.extend({
 
       });
       }
-    },
-    initLoadAnimation: function(){
-        this.loadNextAnim(0,this.soundBank.length);
-    },
-    loadNextAnim: function(i, len){
-        var that = this;
-        window.setTimeout(function(){
-            console.log(i,len);
-            if(i+1<len){
-                that.loadNextAnim(i+1,len);
-            }
-            else {
-            }
-
-        }, 500);
     },
     initKeyHandlers:function(){
         var that = this;

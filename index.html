@@ -142,7 +142,127 @@
     </div>
 
     <div id="tutDescription">
-        Blah blah blah blah
+      <div class="tutContent">
+        <h1>MPC Style Sampler Tutorial</h1>
+        <h2>Featuring SoundJS</h2>
+        <ol>
+          <li>
+            <p>First All HTML elements were created.  This was rapidly prototyped out using <strike>Zen Coding</strike>
+              <a href="https://github.com/sergeche/zen-coding">Emmet</a></p>
+          </li>
+          <li><p>Elements were styled using CSS. There was extensive usage of box-shadow as well as border-radius.</p>
+            <ul>
+              <li>In order to achieve the pad buttons 3D look, several box shadows were used with different colors and
+                offsets.
+                <code>
+                  .btns{
+                  box-shadow: 1px 0px 1px #8A8A8A,0px 1px 1px #ACACAC,2px 1px 1px #8A8A8A,1px 2px 1px #ACACAC,3px
+                  2px 1px #8A8A8A,2px 3px 1px #ACACAC,4px 3px 1px #8A8A8A,3px 4px 1px #ACACAC,5px 4px 1px #8A8A8A,4px
+                  5px 1px #ACACAC,6px 5px 1px #8A8A8A;
+                  }
+                </code>
+              </li>
+              <li> To achieve the 8 segment look in the display, a webfont was used.  The div also had a semi-transparent
+                png background in order to make it look for realistic.
+                <code>
+                  @font-face {
+                    font-family:"digital7";
+                    src: url('Digital-7Mono.woff');
+                  }
+                </code>
+              </li>
+              <li>To make the pressed buttons appear more realistic, they were styled using a radial gradient to make it appear as though an LED was under the button
+              <code>.soundBtn.playing{
+                background-image: radial-gradient(farthest-side circle at center center, #f5c10a 49%, rgba(189,
+                189, 189, 0.7) 162%);
+                }
+              </code></li>
+            </ul>
+
+</li>
+          <li>
+            In order to provide an Object Oriented coding structure to the javascript I used John Resig's <a
+              href="http://ejohn.org/blog/simple-javascript-inheritance/">Simple Javascript Inheritance</a>.  This allows
+            me to create classes that have an init function that is run on instantiation.
+            <code>
+              mpcDisplay = Class.extend({
+                init: function(){
+                  this.initClickHandlers(); // Initialize click handlers (mouse)
+                  this.initKeyHandlers(); // Initialize key press handlers (keyboard)
+                }
+              });
+            </code>
+            In this function run the functions to initialize the click and key press event handlers.
+            <code>
+              initClickHandlers:function(){
+              var that = this;
+
+              // On mousedown of pads
+              $('.soundBtn').mousedown(function(e){
+              // Begin Play sequence using pad's data-button attribute to ID button
+              that.processInput($(this).attr('data-button'));
+              });
+              // On mouseup of pads
+              $('.soundBtn').mouseup(function(e){
+              // Remove soundBtnActive class that makes the button look depressed in
+              $(this).removeClass('soundBtnActive');
+              })
+              }
+            </code>
+            I used separate keydown and keyup handlers in order to be able to make it appear that
+            the button is pressed until the key is release.  This also prevents keyrepeat.
+            <code>
+              initKeyHandlers:function(){
+              var that = this;
+
+              $(document).keydown(function(e){
+              var keyPressed = that.keycodeToCell(e.keyCode);
+              if(keyPressed){
+              if(!that.soundBank[keyPressed-1].isDown){
+              that.soundBank[keyPressed-1].isDown = true;
+              that.soundBank[keyPressed-1].element.addClass('soundBtnActive');
+              that.processInput(keyPressed);
+              }
+              }
+              });
+              $(document).keyup(function(e){
+              var keyPressed = that.keycodeToCell(e.keyCode);
+              if(keyPressed){
+              that.soundBank[keyPressed-1].isDown = false;
+              that.soundBank[keyPressed-1].element.removeClass('soundBtnActive');
+              }
+              })
+              },
+            </code>
+            Keycode to cell is a helper function that determines which pad is associated with the designated key.
+            <code>
+              keycodeToCell: function(keyPressed){
+              var keyCellVals = {
+              49: 1,
+              50: 2,
+              51: 3,
+              52: 4,
+              81: 5,
+              87: 6,
+              69: 7,
+              82: 8,
+              65: 9,
+              83: 10,
+              68: 11,
+              70: 12,
+              90: 13,
+              88: 14,
+              67: 15,
+              86: 16
+              };
+              return keyCellVals[keyPressed] || false;
+              }
+            </code>
+            <ul>
+              <li></li>
+            </ul>
+          </li></ol>
+    </div>
     </div>
 </div>
 </body>

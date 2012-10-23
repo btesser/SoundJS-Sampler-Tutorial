@@ -327,8 +327,11 @@ a .soundBtn.playing div{
     float: left;
     margin-left: 20px;
     padding: 6px;
+    overflow-y: scroll;
 }
-
+.tutContent{
+    height:auto;
+}
 /* Surrounds both the MPC and the tutorial divs */
 #wrapper{
     width: 920px;
