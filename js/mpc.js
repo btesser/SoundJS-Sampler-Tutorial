@@ -60,6 +60,7 @@ mpcDisplay = Class.extend({
                 isDown: false // Is pad currently being pressed (key held down or click held down)
             });
         });
+        SyntaxHighlighter.all();
         this.padNum = $('#padNum'); // DOM element for pad # display
         this.initClickHandlers(); // Initialize click handlers (mouse)
         this.initKeyHandlers(); // Initialize key press handlers (keyboard)
@@ -103,7 +104,6 @@ mpcDisplay = Class.extend({
 
         // On completion of loading for each sound file
         this.preload.onFileLoad = function(event) {
-            console.log('loaded');
             // Assign associated audio file to the pad library after loading completed
             that.soundBank[event.id-1].audioFile = event.result;
             // Add class to light button
@@ -124,10 +124,8 @@ mpcDisplay = Class.extend({
    */
     doneLoading: function(){
       if (this.waveforms.doneLoading && this.preloadDone) {
-      $('.soundBtn').removeClass('loaded', 1000, 'swing', function () {
-        $('.soundBtn').addClass('loaded', 1000, 'swing', function () {
-          console.log('lastplaying');
-          console.log(this);
+      $('#soundBtnDrawArea').removeClass('loading', 1000, 'swing', function () {
+        $('#soundBtnDrawArea').addClass('loading', 1000, 'swing', function () {
           $('.soundBtn').removeClass('loaded');
           $('#soundBtnDrawArea').removeClass('loading');
           $('#loadingMsg').fadeOut();
@@ -159,51 +157,54 @@ mpcDisplay = Class.extend({
             }
         })
     },
-
-    drawWaveform: function(file){
-        this.currentWaveform = Waveform({
-            file: file,
-            canvas: $('#waveform'),
-            cne: '#DBD2E8',
-            colorTwo: '#7857A5',
-            onStatus: function(x) {
-//                $('#status').text('Loading '+Math.floor(x*100)+'%')
-            },
-            onReady: function() {
-//                $('#status').text('Done')
-            }
-        })
-    },
+  /**
+   * Play the target pad and update display
+   * @param target SoundBank object
+   */
     playSound: function(target){
+      // Clear interval for progress percentage
+      // Clear interval for progress bar
         window.clearInterval(this.currentInterval);
         window.clearInterval(mpcDisplay.progressInterval);
-        //Play the sound: play (src, interrupt, delay, offset, loop, volume, pan)
         var that = this;
+      // Bugfix to allow repitition of the same sound quicker
         if(target.soundId == this.currentId)
+          // Set position to 0 rather than replayin sound
             this.currentInstance.setPosition(0);
         else{
-            var instance = createjs.SoundJS.play(target.soundId, soundjs.INTERRUPT_ANY, 0, 0, false, 1);
-            this.currentInstance = instance;
-            if (instance == null || instance.playState == soundjs.PLAY_FAILED) { return; }
-            $('#soundTitle').fadeOut('fast',function(){
-                $('#soundTitle').text(target.soundTitle).fadeIn('fast');
-            });
-            if (!target.sLength)
-                target.sLength = instance.getDuration();
-            $('#soundLength').text(convertMS(target.sLength));
+          // Play the sound: play (src, interrupt, delay, offset, loop, volume, pan)
+          var instance = createjs.SoundJS.play(target.soundId, soundjs.INTERRUPT_ANY, 0, 0, false, 1);
+          this.currentInstance = instance;
+          // If errors, don't continue
+          if (instance == null || instance.playState == soundjs.PLAY_FAILED) { return; }
+          // Fade out old title
+          $('#soundTitle').fadeOut('fast',function(){
+          // Fade in new title
+              $('#soundTitle').text(target.soundTitle).fadeIn('fast');
+          });
+          // If sound bank has not yet included the length, add it
+          if (!target.sLength)
+              target.sLength = instance.getDuration();
+          // Display the sounds length
+          $('#soundLength').text(convertMS(target.sLength));
         }
+        // Set interval for percentage update
         this.currentInterval = window.setInterval(function(){
             $('#soundPos').text(((instance.getPosition()/target.sLength).toFixed(2)*100).toFixed(0) + '%');
         },100);
         target.isPlaying = true;
+        // Draw the waveform ( returns the interval for progress)
         mpcDisplay.progressInterval = this.waveforms.drawSpecifiedWaveform(target.soundId,this.currentInstance.getDuration());
-        console.log(mpcDisplay.progressInterval);
-        instance.onComplete = function(instance) {
+      // After sound completed
+      instance.onComplete = function(instance) {
+        // Stop remove lit class
             target.element.removeClass('playing');
             target.isPlaying = false;
-
+        // If this is the last sound played
             if(instance == that.currentInstance){
+              //Clear the progress interval
                 window.clearInterval(that.currentInterval);
+              // Set progress to 100
                 $('#soundPos').text('100%');
             }
         }

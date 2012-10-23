@@ -317,7 +317,12 @@ a .soundBtn.playing div{
     background-image: -o-radial-gradient(center center, farthest-side circle, #f5c10a 49%, rgba(189, 189, 189, 0.7) 162%);
     background-image: radial-gradient(farthest-side circle at center center, #f5c10a 49%, rgba(189, 189, 189, 0.7) 162%);
 }
-
+ol, ul{
+    /*list-style-position: inside;*/
+    -webkit-margin-before: 0 !important;
+    -webkit-margin-after: 0 !important;
+    -webkit-padding-start: 18px;
+}
 /* Tutorial description div */
 #tutDescription {
     border: 3px solid black;

@@ -1,269 +1,463 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
-        "http://www.w3.org/TR/html4/loose.dtd">
+    "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
-    <title></title>
-    <link rel="stylesheet" href="css/mpc.css"/>
-    <script type="text/javascript" src="http://code.createjs.com/soundjs-0.3.0.min.js"></script>
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.8.1/jquery.min.js"></script>
-    <script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.8.23/jquery-ui.min.js"></script>
-    <script type="text/javascript" src="js/libs/preloadjs-0.2.0.min.js"></script>
-    <script type="text/javascript" src="js/libs/SoundJS.js"></script>
-    <script type="text/javascript" src="js/libs/HTMLAudioPlugin.js"></script>
-    <script type="text/javascript" src="js/libs/swfobject.js"></script>
-    <script type="text/javascript" src="js/libs/FlashPlugin.js"></script>
-    <script src="js/libs/class.js" type="text/javascript"></script>
-    <script src="js/libs/waveform-chrome.js" type="text/javascript"></script>
-    <script type="text/javascript" src="js/mpc.js"></script>
+  <title></title>
+  <link rel="stylesheet" href="css/mpc.css"/>
+  <script type="text/javascript" src="http://code.createjs.com/soundjs-0.3.0.min.js"></script>
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.8.1/jquery.min.js"></script>
+  <script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.8.23/jquery-ui.min.js"></script>
+  <link href="http://alexgorbatchev.com/pub/sh/current/styles/shThemeDefault.css" rel="stylesheet" type="text/css"/>
+  <script src="http://alexgorbatchev.com/pub/sh/current/scripts/shCore.js" type="text/javascript"></script>
+  <script src="http://alexgorbatchev.com/pub/sh/current/scripts/shBrushJScript.js" type="text/javascript"></script>
+  <script src="http://alexgorbatchev.com/pub/sh/current/scripts/shBrushCss.js" type="text/javascript"></script>
+  <script src="http://alexgorbatchev.com/pub/sh/current/scripts/shAutoloader.js" type="text/javascript"></script>
+  <script type="text/javascript" src="js/libs/preloadjs-0.2.0.min.js"></script>
+  <script type="text/javascript" src="js/libs/SoundJS.js"></script>
+  <script type="text/javascript" src="js/libs/HTMLAudioPlugin.js"></script>
+  <script type="text/javascript" src="js/libs/swfobject.js"></script>
+  <script type="text/javascript" src="js/libs/FlashPlugin.js"></script>
+  <script src="js/libs/class.js" type="text/javascript"></script>
+  <script src="js/libs/waveform-chrome.js" type="text/javascript"></script>
+  <script type="text/javascript" src="js/mpc.js"></script>
 </head>
 <body>
 <div id="wrapper">
-    <div class="mpc-wrapper">
-        <div id="displayField">
-            <div id="titleDisplay">
-                <div id="soundTitle"></div>
-                <div id="volume"></div>
-                <div id="padNum"></div>
-            </div>
-            <div id="waveformDisplay">
-                <canvas id="waveform" width="400" height="50"></canvas>
-                <div id="soundPos"></div>
-                <div id="soundLength"></div>
-            </div>
-            <div id="modBtnDisplay">
-                <div class="displayOverflow" id="modDisplay1"></div>
-                <div class="displayOverflow" id="modDisplay2"></div>
-                <div class="displayOverflow" id="modDisplay3"></div>
-            </div>
-        </div>
-        <div id="buttonDrawArea">
-            <div id="subBtnDrawArea">
-                <div id="softBtns">
-                    <a>
-                        <div class="btns modBtn" data-button="soft1"></div>
-                    </a>
-                    <a>
-                        <div class="btns modBtn" data-button="soft2"></div>
-                    </a>
-                    <a>
-                        <div class="btns modBtn" data-button="soft3"></div>
-                    </a>
-                </div>
-                <div id="modBtns">
-                    <a id="leftMod">
-                        <div class="btns modBtn" data-button="edit"></div>
-                    </a>
-                    <a id="rightMod">
-                        <div class="btns modBtn" data-button="play"></div>
-                    </a>
-                </div>
-                <div id="logo">
-                </div>
-                <div id="padMonster" style="
+<div class="mpc-wrapper">
+  <div id="displayField">
+    <div id="titleDisplay">
+      <div id="soundTitle"></div>
+      <div id="volume"></div>
+      <div id="padNum"></div>
+    </div>
+    <div id="waveformDisplay">
+      <canvas id="waveform" width="400" height="50"></canvas>
+      <div id="soundPos"></div>
+      <div id="soundLength"></div>
+    </div>
+    <div id="modBtnDisplay">
+      <div class="displayOverflow" id="modDisplay1"></div>
+      <div class="displayOverflow" id="modDisplay2"></div>
+      <div class="displayOverflow" id="modDisplay3"></div>
+    </div>
+  </div>
+  <div id="buttonDrawArea">
+    <div id="subBtnDrawArea">
+      <div id="softBtns">
+        <a>
+          <div class="btns modBtn" data-button="soft1"></div>
+        </a>
+        <a>
+          <div class="btns modBtn" data-button="soft2"></div>
+        </a>
+        <a>
+          <div class="btns modBtn" data-button="soft3"></div>
+        </a>
+      </div>
+      <div id="modBtns">
+        <a id="leftMod">
+          <div class="btns modBtn" data-button="edit"></div>
+        </a>
+        <a id="rightMod">
+          <div class="btns modBtn" data-button="play"></div>
+        </a>
+      </div>
+      <div id="logo">
+      </div>
+      <div id="padMonster" style="
     font-weight: 100;
     font-style: normal;
 ">PAD<span class="lightText">monster</span></div>
-            </div>
-            <div id="soundBtnDrawArea" class="loading">
-                <div class="btnRow" id="row1"><a>
-                    <div class="btns soundBtn" data-button="1">
-                        <div></div>
-                    </div>
-                </a><a>
-                    <div class="btns soundBtn" data-button="2">
-                        <div></div>
-                    </div>
-                </a><a>
-                    <div class="btns soundBtn" data-button="3">
-                        <div></div>
-                    </div>
-                </a><a>
-                    <div class="btns soundBtn" data-button="4">
-                        <div></div>
-                    </div>
-                </a><span style="width:100%;display:inline-block;"></span></div>
-                <div class="btnRow" id="row2"><a>
-                    <div class="btns soundBtn" data-button="5">
-                        <div></div>
-                    </div>
-                </a><a>
-                    <div class="btns soundBtn" data-button="6">
-                        <div></div>
-                    </div>
-                </a><a>
-                    <div class="btns soundBtn" data-button="7">
-                        <div></div>
-                    </div>
-                </a><a>
-                    <div class="btns soundBtn" data-button="8">
-                        <div></div>
-                    </div>
-                </a><span style="width:100%;display:inline-block;"></span></div>
-                <div class="btnRow" id="row3"><a>
-                    <div class="btns soundBtn" data-button="9">
-                        <div></div>
-                    </div>
-                </a><a>
-                    <div class="btns soundBtn" data-button="10">
-                        <div></div>
-                    </div>
-                </a><a>
-                    <div class="btns soundBtn" data-button="11">
-                        <div></div>
-                    </div>
-                </a><a>
-                    <div class="btns soundBtn" data-button="12">
-                        <div></div>
-                    </div>
-                </a><span style="width:100%;display:inline-block;"></span></div>
-                <div class="btnRow" id="row4"><a>
-                    <div class="btns soundBtn" data-button="13">
-                        <div></div>
-                    </div>
-                </a><a>
-                    <div class="btns soundBtn" data-button="14">
-                        <div></div>
-                    </div>
-                </a><a>
-                    <div class="btns soundBtn" data-button="15">
-                        <div></div>
-                    </div>
-                </a><a>
-                    <div class="btns soundBtn" data-button="16">
-                        <div></div>
-                    </div>
-                </a>
-                    <span style="width:100%;display:inline-block;"></span></div>
-            </div>
-        </div>
-        <div id="loadingMsg">
-            <div id="loadingText">Loading...</div>
-        </div>
     </div>
+    <div id="soundBtnDrawArea" class="loading">
+      <div class="btnRow" id="row1"><a>
+        <div class="btns soundBtn" data-button="1">
+          <div></div>
+        </div>
+      </a><a>
+        <div class="btns soundBtn" data-button="2">
+          <div></div>
+        </div>
+      </a><a>
+        <div class="btns soundBtn" data-button="3">
+          <div></div>
+        </div>
+      </a><a>
+        <div class="btns soundBtn" data-button="4">
+          <div></div>
+        </div>
+      </a><span style="width:100%;display:inline-block;"></span></div>
+      <div class="btnRow" id="row2"><a>
+        <div class="btns soundBtn" data-button="5">
+          <div></div>
+        </div>
+      </a><a>
+        <div class="btns soundBtn" data-button="6">
+          <div></div>
+        </div>
+      </a><a>
+        <div class="btns soundBtn" data-button="7">
+          <div></div>
+        </div>
+      </a><a>
+        <div class="btns soundBtn" data-button="8">
+          <div></div>
+        </div>
+      </a><span style="width:100%;display:inline-block;"></span></div>
+      <div class="btnRow" id="row3"><a>
+        <div class="btns soundBtn" data-button="9">
+          <div></div>
+        </div>
+      </a><a>
+        <div class="btns soundBtn" data-button="10">
+          <div></div>
+        </div>
+      </a><a>
+        <div class="btns soundBtn" data-button="11">
+          <div></div>
+        </div>
+      </a><a>
+        <div class="btns soundBtn" data-button="12">
+          <div></div>
+        </div>
+      </a><span style="width:100%;display:inline-block;"></span></div>
+      <div class="btnRow" id="row4"><a>
+        <div class="btns soundBtn" data-button="13">
+          <div></div>
+        </div>
+      </a><a>
+        <div class="btns soundBtn" data-button="14">
+          <div></div>
+        </div>
+      </a><a>
+        <div class="btns soundBtn" data-button="15">
+          <div></div>
+        </div>
+      </a><a>
+        <div class="btns soundBtn" data-button="16">
+          <div></div>
+        </div>
+      </a>
+        <span style="width:100%;display:inline-block;"></span></div>
+    </div>
+  </div>
+  <div id="loadingMsg">
+    <div id="loadingText">Loading...</div>
+  </div>
+</div>
 
-    <div id="tutDescription">
-      <div class="tutContent">
-        <h1>MPC Style Sampler Tutorial</h1>
-        <h2>Featuring SoundJS</h2>
-        <ol>
-          <li>
-            <p>First All HTML elements were created.  This was rapidly prototyped out using <strike>Zen Coding</strike>
-              <a href="https://github.com/sergeche/zen-coding">Emmet</a></p>
-          </li>
-          <li><p>Elements were styled using CSS. There was extensive usage of box-shadow as well as border-radius.</p>
-            <ul>
-              <li>In order to achieve the pad buttons 3D look, several box shadows were used with different colors and
-                offsets.
-                <code>
-                  .btns{
-                  box-shadow: 1px 0px 1px #8A8A8A,0px 1px 1px #ACACAC,2px 1px 1px #8A8A8A,1px 2px 1px #ACACAC,3px
-                  2px 1px #8A8A8A,2px 3px 1px #ACACAC,4px 3px 1px #8A8A8A,3px 4px 1px #ACACAC,5px 4px 1px #8A8A8A,4px
-                  5px 1px #ACACAC,6px 5px 1px #8A8A8A;
-                  }
-                </code>
-              </li>
-              <li> To achieve the 8 segment look in the display, a webfont was used.  The div also had a semi-transparent
-                png background in order to make it look for realistic.
-                <code>
-                  @font-face {
-                    font-family:"digital7";
-                    src: url('Digital-7Mono.woff');
-                  }
-                </code>
-              </li>
-              <li>To make the pressed buttons appear more realistic, they were styled using a radial gradient to make it appear as though an LED was under the button
-              <code>.soundBtn.playing{
-                background-image: radial-gradient(farthest-side circle at center center, #f5c10a 49%, rgba(189,
-                189, 189, 0.7) 162%);
-                }
-              </code></li>
-            </ul>
+<div id="tutDescription">
+<div class="tutContent">
+<h1>MPC Style Sampler Tutorial</h1>
+
+<h2>Featuring SoundJS</h2>
+<ol>
+<li>
+  <p>First All HTML elements were created. This was rapidly prototyped out using <strike>Zen Coding</strike>
+    <a href="https://github.com/sergeche/zen-coding">Emmet</a></p>
+</li>
+<li><p>Elements were styled using CSS. There was extensive usage of box-shadow as well as border-radius.</p>
+  <ul>
+    <li>In order to achieve the pad buttons 3D look, several box shadows were used with different colors and
+      offsets.
+    </li>
+      <pre  class="brush: css">
+        .btns{
+        box-shadow: 1px 0px 1px #8A8A8A,0px 1px 1px #ACACAC,2px 1px 1px #8A8A8A,1px 2px 1px #ACACAC,3px
+        2px 1px #8A8A8A,2px 3px 1px #ACACAC,4px 3px 1px #8A8A8A,3px 4px 1px #ACACAC,5px 4px 1px #8A8A8A,4px
+        5px 1px #ACACAC,6px 5px 1px #8A8A8A;
+        }
+      </pre>
+    <li> To achieve the 8 segment look in the display, a webfont was used. The div also had a semi-transparent
+      png background in order to make it look for realistic.
+    </li>
+      <pre  class="brush: css">
+        @font-face {
+        font-family:"digital7";
+        src: url('Digital-7Mono.woff');
+        }
+      </pre>
+    <li>To make the pressed buttons appear more realistic, they were styled using a radial gradient to make it appear as
+      though an LED was under the button
+    </li>
+      <pre  class="brush: css">.soundBtn.playing{
+        background-image: radial-gradient(farthest-side circle at center center, #f5c10a 49%, rgba(189,
+        189, 189, 0.7) 162%);
+        }
+      </pre>
+  </ul>
 
 </li>
-          <li>
-            In order to provide an Object Oriented coding structure to the javascript I used John Resig's <a
-              href="http://ejohn.org/blog/simple-javascript-inheritance/">Simple Javascript Inheritance</a>.  This allows
-            me to create classes that have an init function that is run on instantiation.
-            <code>
-              mpcDisplay = Class.extend({
-                init: function(){
-                  this.initClickHandlers(); // Initialize click handlers (mouse)
-                  this.initKeyHandlers(); // Initialize key press handlers (keyboard)
-                }
-              });
-            </code>
-            In this function run the functions to initialize the click and key press event handlers.
-            <code>
-              initClickHandlers:function(){
-              var that = this;
+<li>
+  In order to provide an Object Oriented coding structure to the javascript I used John Resig's <a
+    href="http://ejohn.org/blog/simple-javascript-inheritance/">Simple Javascript Inheritance</a>. This allows
+  me to create classes that have an init function that is run on instantiation.</li>
+  <pre  class="brush: js">
+    mpcDisplay = Class.extend({
+    init: function(){
+    this.initClickHandlers(); // Initialize click handlers (mouse)
+    this.initKeyHandlers(); // Initialize key press handlers (keyboard)
+    }
+    });
+  </pre>
+  <li>In this function run the functions to initialize the click and key press event handlers.</li>
+  <pre  class="brush: js">
+    initClickHandlers:function(){
+    var that = this;
 
-              // On mousedown of pads
-              $('.soundBtn').mousedown(function(e){
-              // Begin Play sequence using pad's data-button attribute to ID button
-              that.processInput($(this).attr('data-button'));
-              });
-              // On mouseup of pads
-              $('.soundBtn').mouseup(function(e){
-              // Remove soundBtnActive class that makes the button look depressed in
-              $(this).removeClass('soundBtnActive');
-              })
-              }
-            </code>
-            I used separate keydown and keyup handlers in order to be able to make it appear that
-            the button is pressed until the key is release.  This also prevents keyrepeat.
-            <code>
-              initKeyHandlers:function(){
-              var that = this;
+    // On mousedown of pads
+    $('.soundBtn').mousedown(function(e){
+    // Begin Play sequence using pad's data-button attribute to ID button
+    that.processInput($(this).attr('data-button'));
+    });
+    // On mouseup of pads
+    $('.soundBtn').mouseup(function(e){
+    // Remove soundBtnActive class that makes the button look depressed in
+    $(this).removeClass('soundBtnActive');
+    })
+    }
+  </pre>
+<li>I used separate keydown and keyup handlers in order to be able to make it appear that the button is pressed until
+  the key is release. This also prevents keyrepeat.
+</li>
+  <pre  class="brush: js">
+    initKeyHandlers:function(){
+    var that = this;
 
-              $(document).keydown(function(e){
-              var keyPressed = that.keycodeToCell(e.keyCode);
-              if(keyPressed){
-              if(!that.soundBank[keyPressed-1].isDown){
-              that.soundBank[keyPressed-1].isDown = true;
-              that.soundBank[keyPressed-1].element.addClass('soundBtnActive');
-              that.processInput(keyPressed);
-              }
-              }
-              });
-              $(document).keyup(function(e){
-              var keyPressed = that.keycodeToCell(e.keyCode);
-              if(keyPressed){
-              that.soundBank[keyPressed-1].isDown = false;
-              that.soundBank[keyPressed-1].element.removeClass('soundBtnActive');
-              }
-              })
-              },
-            </code>
-            Keycode to cell is a helper function that determines which pad is associated with the designated key.
-            <code>
-              keycodeToCell: function(keyPressed){
-              var keyCellVals = {
-              49: 1,
-              50: 2,
-              51: 3,
-              52: 4,
-              81: 5,
-              87: 6,
-              69: 7,
-              82: 8,
-              65: 9,
-              83: 10,
-              68: 11,
-              70: 12,
-              90: 13,
-              88: 14,
-              67: 15,
-              86: 16
-              };
-              return keyCellVals[keyPressed] || false;
-              }
-            </code>
-            <ul>
-              <li></li>
-            </ul>
-          </li></ol>
-    </div>
-    </div>
+    $(document).keydown(function(e){
+    var keyPressed = that.keycodeToCell(e.keyCode);
+    if(keyPressed){
+    if(!that.soundBank[keyPressed-1].isDown){
+    that.soundBank[keyPressed-1].isDown = true;
+    that.soundBank[keyPressed-1].element.addClass('soundBtnActive');
+    that.processInput(keyPressed);
+    }
+    }
+    });
+    $(document).keyup(function(e){
+    var keyPressed = that.keycodeToCell(e.keyCode);
+    if(keyPressed){
+    that.soundBank[keyPressed-1].isDown = false;
+    that.soundBank[keyPressed-1].element.removeClass('soundBtnActive');
+    }
+    })
+    },
+  </pre>
+<li>Keycode to cell is a helper function that determines which pad is associated with the designated key.</li>
+  <pre  class="brush: js">
+    keycodeToCell: function(keyPressed){
+    var keyCellVals = {
+    49: 1,
+    50: 2,
+    51: 3,
+    52: 4,
+    81: 5,
+    87: 6,
+    69: 7,
+    82: 8,
+    65: 9,
+    83: 10,
+    68: 11,
+    70: 12,
+    90: 13,
+    88: 14,
+    67: 15,
+    86: 16
+    };
+    return keyCellVals[keyPressed] || false;
+    }
+  </pre>
+</li>
+<li>Next Create JS was set up
+  <ul>
+    <li>
+      The audio files were loaded using a preloadJS manifest. In this case, each item has some additional parameters so
+      that we can access them for the Display area.
+      All that is required for each file is src and id.</li>
+      <pre  class="brush: js">
+        var soundLibrary = {}; // Initialize manifest object for PreloadJS
+        soundLibrary.assetsPath = 'sounds/'; // Set root for audio files relative to HTML file (not js)
+        // Assign manifest of audio files for PreloadJS. Also includes custom values: title & fileName for use
+        in my code
+        soundLibrary.manifest= [
+        {src:soundLibrary.assetsPath+"kick.mp3", id:1, title: 'Kick', fileName: 'kick.mp3'},
+        {src:soundLibrary.assetsPath+"4dsnare.mp3", id:2, title: '4D Snare', fileName: '4dsnare.mp3'},
+        {src:soundLibrary.assetsPath+"2001-Chronic.mp3", id:3, title: '2001 Chronic', fileName:
+        '2001-Chronic.mp3'},
+        {src:soundLibrary.assetsPath+"harp1.mp3", id:4, title: 'Harp 1', fileName: 'harp1.mp3'},
+        {src:soundLibrary.assetsPath+"harp2.mp3", id:5, title: 'Harp 2', fileName: 'harp2.mp3'},
+        {src:soundLibrary.assetsPath+"AfricanChipmunks.mp3", id:6, title: 'African Chipmunks', fileName:
+        'AfricanChipmunks.mp3'},
+        {src:soundLibrary.assetsPath+"keepthechange.mp3", id:7, title: 'Keep The Change', fileName:
+        'keepthechange.mp3'},
+        {src:soundLibrary.assetsPath+"pitchedsnare.mp3", id:8, title: 'Pitched Snare', fileName:
+        'pitchedsnare.mp3'},
+        {src:soundLibrary.assetsPath+"snaphats.mp3", id:9, title: 'Snap Hats', fileName: 'snaphats.mp3'},
+        {src:soundLibrary.assetsPath+"vinylblip.mp3", id:10, title: 'Vinyl Blip', fileName: 'vinylblip.mp3'},
+        {src:soundLibrary.assetsPath+"comedown.mp3", id:11, title: 'Come Down', fileName: 'comedown.mp3'},
+        {src:soundLibrary.assetsPath+"fourletter.mp3", id:12, title: 'Four Letter', fileName: 'fourletter.mp3'},
+        {src:soundLibrary.assetsPath+"mouthsofdelight.mp3", id:13, title: 'Mouths of Delight', fileName:
+        'mouthsofdelight.mp3'},
+        {src:soundLibrary.assetsPath+"musicbox1.mp3", id:14, title: 'Music Box 1', fileName: 'musicbox1.mp3'},
+        {src:soundLibrary.assetsPath+"musicbox2.mp3", id:15, title: 'Music Box 2', fileName: 'musicbox2.mp3'},
+        {src:soundLibrary.assetsPath+"woodenrandarp.mp3", id:16, title: 'Wooden Rand Arp', fileName:
+        'woodenrandarp.mp3'}
+        ];
+      </pre>
+    <li>
+      I added an initCreateJs function for the rest of the setup.</li>
+      <pre  class="brush: js">
+        initCreateJs: function(){
+        var that = this;
+        // Set location of FlashAudioPlugin.swf in relation to SoundJS.js
+        createjs.FlashPlugin.BASE_PATH = './';
+        // Determine if SoundJS has been initialized. If not, initialize it.
+        if (!soundjs.checkPlugin(true)) {
+        console.error('createjs error');
+        return;
+        }
+        // Initialize local preload js
+        this.preload = new createjs.PreloadJS();
+        //Install SoundJS as a plugin, then PreloadJS will initialize it automatically.
+        this.preload.installPlugin(soundjs);
+
+        // On completion of loading for each sound file
+        this.preload.onFileLoad = function(event) {
+        // Assign associated audio file to the pad library after loading completed
+        that.soundBank[event.id-1].audioFile = event.result;
+        // Add class to light button
+        that.soundBank[event.id-1].element.addClass('loaded');
+
+        };
+        this.preload.onComplete = function(event) {
+        that.preloadDone = true;
+        // Run loadingComplete function
+        that.doneLoading();
+        };
+
+        //Load the manifest and pass 'true' to start loading immediately. Otherwise, you can call load()
+        manually.
+        this.preload.loadManifest(soundLibrary.manifest, true);
+        },
+      </pre>
+      <li>When loading is complete of all buttons, I flash them and then hide the loading message using jQuery</li>
+      <pre  class="brush: js">doneLoading: function(){
+        if (this.waveforms.doneLoading && this.preloadDone) {
+        $('#soundBtnDrawArea').removeClass('loading', 1000, 'swing', function () {
+        $('#soundBtnDrawArea').addClass('loading', 1000, 'swing', function () {
+        $('.soundBtn').removeClass('loaded');
+        $('#soundBtnDrawArea').removeClass('loading');
+        $('#loadingMsg').fadeOut();
+        });
+
+
+        });
+        }
+        },</pre>
+
+
+  </ul>
+</li>
+<li>Init was modified to include assigning each trigger pad button all the values it needs including the jQuery element and sound info</li>
+<pre class="brush: js">
+  $.each($('.soundBtn'), function(i){
+            defaultSound = soundLibrary.manifest[i]; // Default sound for pad index i equals manifest index i
+            that.soundBank.push({
+                triggerPad: $(this).attr('data-button'), // Pad # is determined from attribute data-button of pad element
+                element: $(this), // jQuery instance of dom element
+                soundTitle: defaultSound.title, // Title of the sound
+                fileName: defaultSound.fileName, // Filename of the sound
+                soundId: defaultSound.id, // PreloadJs ID of sound
+                sLength: null, // Length of sound file (will be loaded in later)
+                isPlaying: false, // Play state of sound
+                isDown: false // Is pad currently being pressed (key held down or click held down)
+            });
+        });
+</pre>
+<li>A function was created to handle playing the sounds and putting the info on the display. An interval was used to
+  update the progress.  Any text updating was faded in for realism. In order to fix an issue where if the same sound was having difficulty repeating rapidly, rather than replaying the sound, it was set back to the initial position
+The the associated soundbank is sent to the function
+</li>
+<pre class="brush: js">
+  playSound: function(target){
+      // Clear interval for progress percentage
+      // Clear interval for progress bar
+        window.clearInterval(this.currentInterval);
+        window.clearInterval(mpcDisplay.progressInterval);
+        var that = this;
+      // Bugfix to allow repitition of the same sound quicker
+        if(target.soundId == this.currentId)
+          // Set position to 0 rather than replayin sound
+            this.currentInstance.setPosition(0);
+        else{
+          // Play the sound: play (src, interrupt, delay, offset, loop, volume, pan)
+          var instance = createjs.SoundJS.play(target.soundId, soundjs.INTERRUPT_ANY, 0, 0, false, 1);
+          this.currentInstance = instance;
+          // If errors, don't continue
+          if (instance == null || instance.playState == soundjs.PLAY_FAILED) { return; }
+          // Fade out old title
+          $('#soundTitle').fadeOut('fast',function(){
+          // Fade in new title
+              $('#soundTitle').text(target.soundTitle).fadeIn('fast');
+          });
+          // If sound bank has not yet included the length, add it
+          if (!target.sLength)
+              target.sLength = instance.getDuration();
+          // Display the sounds length
+          $('#soundLength').text(convertMS(target.sLength));
+        }
+        // Set interval for percentage update
+        this.currentInterval = window.setInterval(function(){
+            $('#soundPos').text(((instance.getPosition()/target.sLength).toFixed(2)*100).toFixed(0) + '%');
+        },100);
+        target.isPlaying = true;
+        // Draw the waveform ( returns the interval for progress)
+        mpcDisplay.progressInterval = this.waveforms.drawSpecifiedWaveform(target.soundId,this.currentInstance.getDuration());
+      // After sound completed
+      instance.onComplete = function(instance) {
+        // Stop remove lit class
+            target.element.removeClass('playing');
+            target.isPlaying = false;
+        // If this is the last sound played
+            if(instance == that.currentInstance){
+              //Clear the progress interval
+                window.clearInterval(that.currentInterval);
+              // Set progress to 100
+                $('#soundPos').text('100%');
+            }
+        }
+    }
+</pre>
+<li>
+  Waveform-chrome JS was modified to support display of progress within the canvas as well as preloading.
+  So I preload each waveform and display when necessary.  See code for more on this
+</li>
+<pre class="brush: js">    preloadWaveforms:function(){
+        var fileArray = [];
+        $.each(soundLibrary.manifest,function(){
+            fileArray.push(this.src);
+        });
+        this.waveforms = Waveform({
+            fileArray: fileArray,
+            canvas: $('#waveform'),
+            status: $('#status'), // Status div for
+            colorOne: '#DBD2E8',
+            colorTwo: '#7857A5',
+            loadingCallback: function(){
+
+            },
+            onStatus: function(x) {
+//                $('#status').text('Loading '+Math.floor(x*100)+'%')
+            },
+            onReady: function() {
+//                $('#status').text('Done')
+            }
+        })
+    }</pre>
+
+</ol>
+</div>
+</div>
 </div>
 </body>
 </html>
