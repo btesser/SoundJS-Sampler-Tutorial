@@ -167,6 +167,8 @@ mpcDisplay = Class.extend({
         this.currentWaveform = Waveform({
             file: file,
             canvas: $('#waveform'),
+            cne: '#DBD2E8',
+            colorTwo: '#7857A5',
             onStatus: function(x) {
 //                $('#status').text('Loading '+Math.floor(x*100)+'%')
             },
@@ -197,9 +199,8 @@ mpcDisplay = Class.extend({
             $('#soundPos').text(((instance.getPosition()/target.sLength).toFixed(2)*100).toFixed(0) + '%');
         },100);
         target.isPlaying = true;
-//        this.waveforms.showWaveformProgress(this.currentInstance);
-        this.waveforms.drawSpecifiedWaveform(target.soundId,this.currentInstance);
-
+        mpcDisplay.progressInterval = this.waveforms.drawSpecifiedWaveform(target.soundId,this.currentInstance.getDuration());
+        console.log(mpcDisplay.progressInterval);
         instance.onComplete = function(instance) {
             target.element.removeClass('playing');
             target.isPlaying = false;
@@ -239,6 +240,8 @@ mpcDisplay = Class.extend({
             fileArray: fileArray,
             canvas: $('#waveform'),
             status: $('#status'),
+            colorOne: '#DBD2E8',
+            colorTwo: '#7857A5',
             onStatus: function(x) {
 //                $('#status').text('Loading '+Math.floor(x*100)+'%')
             },
