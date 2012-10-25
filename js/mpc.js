@@ -60,6 +60,8 @@ mpcDisplay = Class.extend({
                 isDown: false // Is pad currently being pressed (key held down or click held down)
             });
         });
+        SyntaxHighlighter.defaults['collapse'] = true;
+        //SyntaxHighlighter.defaults['toolbar'] = false;
         SyntaxHighlighter.all();
         this.padNum = $('#padNum'); // DOM element for pad # display
         this.initClickHandlers(); // Initialize click handlers (mouse)
@@ -250,6 +252,23 @@ mpcDisplay = Class.extend({
 //                $('#status').text('Done')
             }
         })
+    },
+    switch:function(){
+
+        if($(".mpc-wrapper").is(':visible')){
+            $(".mpc-wrapper").fadeOut(500, function(){
+                $("#tutDescription").animate({
+                    width: "100%"
+                }, 1000);
+                $(".tutContent").fadeIn(1000);
+            });
+        }else{
+            $(".tutContent").fadeOut(500, function(){
+                $("#tutDescription").animate({width: "49%"}, 1000, function(){
+                    $(".mpc-wrapper").fadeIn(500);
+                });
+            });
+        }
     },
 
     /**
