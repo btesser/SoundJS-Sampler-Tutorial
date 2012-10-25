@@ -60,9 +60,7 @@ mpcDisplay = Class.extend({
                 isDown: false // Is pad currently being pressed (key held down or click held down)
             });
         });
-        SyntaxHighlighter.defaults['collapse'] = true;
-        //SyntaxHighlighter.defaults['toolbar'] = false;
-        SyntaxHighlighter.all();
+
         this.padNum = $('#padNum'); // DOM element for pad # display
         this.initClickHandlers(); // Initialize click handlers (mouse)
         this.initKeyHandlers(); // Initialize key press handlers (keyboard)
@@ -254,18 +252,19 @@ mpcDisplay = Class.extend({
         })
     },
     switch:function(){
-
         if($(".mpc-wrapper").is(':visible')){
             $(".mpc-wrapper").fadeOut(500, function(){
                 $("#tutDescription").animate({
                     width: "100%"
                 }, 1000);
                 $(".tutContent").fadeIn(1000);
+                $("#tutLink").html("Click here to collapse the tutorial");
             });
         }else{
             $(".tutContent").fadeOut(500, function(){
                 $("#tutDescription").animate({width: "49%"}, 1000, function(){
                     $(".mpc-wrapper").fadeIn(500);
+                    $("#tutLink").html("Click here to see the tutorial");
                 });
             });
         }
@@ -310,4 +309,6 @@ function convertMS(ms) {
 }
 $(document).ready(function(){
     sampler = new mpcDisplay();
+    $("pre.styles").snippet("css",{style:"bright"});
+    $("pre.js").snippet("javascript_dom",{style:"typical"});
 });
