@@ -13,23 +13,23 @@ var soundLibrary = {};          // Initialize manifest object for PreloadJS
 soundLibrary.assetsPath = 'sounds/';    // Set root for audio files relative to HTML file (not js)
 // Assign manifest of audio files for PreloadJS.  Also includes custom values: title & fileName for use in my code
 soundLibrary.manifest= [
-        {src:soundLibrary.assetsPath+"kick.mp3", id:1, title: 'Kick', fileName: 'kick.mp3'},
-        {src:soundLibrary.assetsPath+"4dsnare.mp3", id:2, title: '4D Snare', fileName: '4dsnare.mp3'},
-        {src:soundLibrary.assetsPath+"2001-Chronic.mp3", id:3, title: '2001 Chronic', fileName: '2001-Chronic.mp3'},
-        {src:soundLibrary.assetsPath+"harp1.mp3", id:4, title: 'Harp 1', fileName: 'harp1.mp3'},
-        {src:soundLibrary.assetsPath+"harp2.mp3", id:5, title: 'Harp 2', fileName: 'harp2.mp3'},
-        {src:soundLibrary.assetsPath+"AfricanChipmunks.mp3", id:6, title: 'African Chipmunks', fileName: 'AfricanChipmunks.mp3'},
-        {src:soundLibrary.assetsPath+"keepthechange.mp3", id:7, title: 'Keep The Change', fileName: 'keepthechange.mp3'},
-        {src:soundLibrary.assetsPath+"pitchedsnare.mp3", id:8, title: 'Pitched Snare', fileName: 'pitchedsnare.mp3'},
-        {src:soundLibrary.assetsPath+"snaphats.mp3", id:9, title: 'Snap Hats', fileName: 'snaphats.mp3'},
-        {src:soundLibrary.assetsPath+"vinylblip.mp3", id:10, title: 'Vinyl Blip', fileName: 'vinylblip.mp3'},
+    {src:soundLibrary.assetsPath+"kick.mp3", id:1, title: 'Kick', fileName: 'kick.mp3'},
+    {src:soundLibrary.assetsPath+"4dsnare.mp3", id:2, title: '4D Snare', fileName: '4dsnare.mp3'},
+    {src:soundLibrary.assetsPath+"2001-Chronic.mp3", id:3, title: '2001 Chronic', fileName: '2001-Chronic.mp3'},
+    {src:soundLibrary.assetsPath+"harp1.mp3", id:4, title: 'Harp 1', fileName: 'harp1.mp3'},
+    {src:soundLibrary.assetsPath+"harp2.mp3", id:5, title: 'Harp 2', fileName: 'harp2.mp3'},
+    {src:soundLibrary.assetsPath+"AfricanChipmunks.mp3", id:6, title: 'African Chipmunks', fileName: 'AfricanChipmunks.mp3'},
+    {src:soundLibrary.assetsPath+"keepthechange.mp3", id:7, title: 'Keep The Change', fileName: 'keepthechange.mp3'},
+    {src:soundLibrary.assetsPath+"pitchedsnare.mp3", id:8, title: 'Pitched Snare', fileName: 'pitchedsnare.mp3'},
+    {src:soundLibrary.assetsPath+"snaphats.mp3", id:9, title: 'Snap Hats', fileName: 'snaphats.mp3'},
+    {src:soundLibrary.assetsPath+"vinylblip.mp3", id:10, title: 'Vinyl Blip', fileName: 'vinylblip.mp3'},
     {src:soundLibrary.assetsPath+"comedown.mp3", id:11, title: 'Come Down', fileName: 'comedown.mp3'},
     {src:soundLibrary.assetsPath+"fourletter.mp3", id:12, title: 'Four Letter', fileName: 'fourletter.mp3'},
     {src:soundLibrary.assetsPath+"mouthsofdelight.mp3", id:13, title: 'Mouths of Delight', fileName: 'mouthsofdelight.mp3'},
     {src:soundLibrary.assetsPath+"musicbox1.mp3", id:14, title: 'Music Box 1', fileName: 'musicbox1.mp3'},
     {src:soundLibrary.assetsPath+"musicbox2.mp3", id:15, title: 'Music Box 2', fileName: 'musicbox2.mp3'},
     {src:soundLibrary.assetsPath+"woodenrandarp.mp3", id:16, title: 'Wooden Rand Arp', fileName: 'woodenrandarp.mp3'}
-    ];
+];
 
 // Initialize Parent Class
 mpcDisplay = Class.extend({
@@ -140,7 +140,6 @@ mpcDisplay = Class.extend({
 
         $(document).keydown(function(e){
             var keyPressed = that.keycodeToCell(e.keyCode);
-            console.log(e.keyCode);
             if(keyPressed){
                 if(!that.soundBank[keyPressed-1].isDown){
                     that.soundBank[keyPressed-1].isDown = true;
@@ -221,7 +220,6 @@ mpcDisplay = Class.extend({
     },
     pulseButton:function(button, initialPulse){
         var that = this;
-        console.log('pb',button,button.isPlaying);
         $('div',button.element).effect('pulsate','easeInOutBack',1000,function(){
             if(button.isPlaying || initialPulse)
                 that.pulseButton(button);

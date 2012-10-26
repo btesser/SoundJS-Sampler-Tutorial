@@ -59,12 +59,8 @@
           <div class="btns modBtn" data-button="play"></div>
         </a>
       </div>
-      <div id="logo">
-      </div>
-      <div id="padMonster" style="
-    font-weight: 100;
-    font-style: normal;
-">PAD<span class="lightText">monster</span></div>
+      <div id="logo"></div>
+      <div id="padMonster">PAD<span class="lightText">monster</span></div>
     </div>
     <div id="soundBtnDrawArea" class="loading">
       <div class="btnRow" id="row1"><a>
@@ -154,42 +150,41 @@
 <div class="tutContent">
 <ol>
 <li>
-  <p>First All HTML elements were created. This was rapidly prototyped out using <strike>Zen Coding</strike>
-    <a href="https://github.com/sergeche/zen-coding">Emmet</a></p>
+  <p>First, all HTML elements were created. This was rapidly prototyped out using <strike>Zen Coding</strike>
+    <a href="https://github.com/sergeche/zen-coding" target="_blank">Emmet</a>.</p>
 </li>
 <li><p>Elements were styled using CSS. There was extensive usage of box-shadow as well as border-radius.</p>
   <ul>
-    <li>In order to achieve the pad buttons 3D look, several box shadows were used with different colors and
-      offsets.
+    <li>In order to achieve the three dimensional look of the pad buttons, several box shadows were used with different
+        colors and offsets.
     </li>
       <pre  class="styles">
 .btns{
-box-shadow: 1px 0px 1px #8A8A8A,0px 1px 1px #ACACAC,2px 1px 1px #8A8A8A,1px 2px 1px #ACACAC,3px
-2px 1px #8A8A8A,2px 3px 1px #ACACAC,4px 3px 1px #8A8A8A,3px 4px 1px #ACACAC,5px 4px 1px #8A8A8A,
-4px 5px 1px #ACACAC,6px 5px 1px #8A8A8A;
+    box-shadow: 1px 0px 1px #8A8A8A,0px 1px 1px #ACACAC,2px 1px 1px #8A8A8A,
+    1px 2px 1px #ACACAC, 3px 2px 1px #8A8A8A,2px 3px 1px #ACACAC,4px 3px 1px #8A8A8A,
+    3px 4px 1px #ACACAC, 5px 4px 1px #8A8A8A, 4px 5px 1px #ACACAC,6px 5px 1px #8A8A8A;
 }</pre>
-    <li> To achieve the 8 segment look in the display, a webfont was used. The div also had a semi-transparent
-      png background in order to make it look for realistic.
-    </li>
-      <pre  class="styles">
-@font-face {
-font-family:"digital7";
-src: url('Digital-7Mono.woff');
-}</pre>
-    <li>To make the pressed buttons appear more realistic, they were styled using a radial gradient to make it appear as
-      though an LED was under the button
+    <li>To mimic the realistic response of pad buttons, a radial gradient was added to make it appear as
+      though an LED was activated under the button when pressed.
     </li>
       <pre  class="styles">
 .soundBtn.playing{
-background-image: radial-gradient(farthest-side circle at center center, #f5c10a 49%, rgba(189,
-189, 189, 0.7) 162%);
+    background-image: radial-gradient(farthest-side circle at center center, #f5c10a 49%,  rgba(189, 189, 189, 0.7) 162%);
+}</pre>
+      <li>A webfont was used to recreate the 8-segment look of an LCD display. The div also has a semi-transparent
+          PNG background in order to make it look more realistic.
+      </li>
+      <pre  class="styles">
+@font-face {
+    font-family:"digital7";
+    src: url('Digital-7Mono.woff');
 }</pre>
   </ul>
 </li>
 <li>
-  In order to provide an Object Oriented coding structure to the javascript I used John Resig's <a
-    href="http://ejohn.org/blog/simple-javascript-inheritance/">Simple Javascript Inheritance</a>. This allows
-  me to create classes that have an init function that is run on instantiation.</li>
+  We wanted to utilize an Object Oriented coding structure within javascript, so we decided to use John Resig's <a
+    href="http://ejohn.org/blog/simple-javascript-inheritance/" target="_blank">Simple Javascript Inheritance</a>. This allows
+  us to create classes that have an init function that is run on instantiation.</li>
   <pre  class="js">
 mpcDisplay = Class.extend({
     init: function(){
@@ -197,7 +192,7 @@ mpcDisplay = Class.extend({
         this.initKeyHandlers(); // Initialize key press handlers (keyboard)
     }
 });</pre>
-  <li>In this function run the functions to initialize the click and key press event handlers.</li>
+  <li>This function initializes the click event handlers for the sound pad buttons.</li>
   <pre  class="js">
 initClickHandlers:function(){
     var that = this;
@@ -213,32 +208,32 @@ initClickHandlers:function(){
         $(this).removeClass('soundBtnActive');
     })
 }</pre>
-<li>I used separate keydown and keyup handlers in order to be able to make it appear that the button is pressed until
-  the key is release. This also prevents keyrepeat.
+<li>And this function initializes the key event handlers to complement the click events. We used separate keydown
+  and keyup handlers in order to be able to make it appear that the button is pressed until released.
 </li>
   <pre  class="js">
 initKeyHandlers:function(){
-var that = this;
+    var that = this;
 
-$(document).keydown(function(e){
-    var keyPressed = that.keycodeToCell(e.keyCode);
-    if(keyPressed){
-        if(!that.soundBank[keyPressed-1].isDown){
-            that.soundBank[keyPressed-1].isDown = true;
-            that.soundBank[keyPressed-1].element.addClass('soundBtnActive');
-            that.processInput(keyPressed);
+    $(document).keydown(function(e){
+        var keyPressed = that.keycodeToCell(e.keyCode);
+        if(keyPressed){
+            if(!that.soundBank[keyPressed-1].isDown){
+                that.soundBank[keyPressed-1].isDown = true;
+                that.soundBank[keyPressed-1].element.addClass('soundBtnActive');
+                that.processInput(keyPressed);
+            }
         }
-    }
-});
-$(document).keyup(function(e){
-    var keyPressed = that.keycodeToCell(e.keyCode);
+    });
+    $(document).keyup(function(e){
+        var keyPressed = that.keycodeToCell(e.keyCode);
         if(keyPressed){
             that.soundBank[keyPressed-1].isDown = false;
             that.soundBank[keyPressed-1].element.removeClass('soundBtnActive');
         }
-    })
+    });
 },</pre>
-<li>Keycode to cell is a helper function that determines which pad is associated with the designated key.</li>
+<li>keycodeToCell is a helper function that determines which pad is associated with the activated key.</li>
   <pre  class="js">
 keycodeToCell: function(keyPressed){
     var keyCellVals = {
@@ -262,7 +257,7 @@ keycodeToCell: function(keyPressed){
     return keyCellVals[keyPressed] || false;
 }</pre>
 </li>
-<li>Next Create JS was set up
+<li><p>Next, <a href="http://www.createjs.com/#!/SoundJS" target="_blank">SoundJS</a> was set up to handle the actual audio functionality</p>
   <ul>
     <li>
       The audio files were loaded using a preloadJS manifest. In this case, each item has some additional parameters so
@@ -331,7 +326,7 @@ initCreateJs: function(){
     manually.
     this.preload.loadManifest(soundLibrary.manifest, true);
 },</pre>
-      <li>When loading is complete of all buttons, I flash them and then hide the loading message using jQuery</li>
+      <li>When loading of all buttons is complete, I flash them and then hide the loading message using jQuery</li>
       <pre  class="js">
 doneLoading: function(){
     if (this.waveforms.doneLoading && this.preloadDone) {
@@ -346,36 +341,37 @@ doneLoading: function(){
 },</pre>
   </ul>
 </li>
-<li>Init was modified to include assigning each trigger pad button all the values it needs including the jQuery element and sound info</li>
+<li>Init was modified to include the assignment of all values required by each trigger pad button, including the jQuery element and sound info.</li>
 <pre class="js">
 $.each($('.soundBtn'), function(i){
-        defaultSound = soundLibrary.manifest[i]; // Default sound for pad index i equals manifest index i
-        that.soundBank.push({
-            triggerPad: $(this).attr('data-button'), // Pad # is determined from attribute data-button of pad element
-            element: $(this), // jQuery instance of dom element
-            soundTitle: defaultSound.title, // Title of the sound
-            fileName: defaultSound.fileName, // Filename of the sound
-            soundId: defaultSound.id, // PreloadJs ID of sound
-            sLength: null, // Length of sound file (will be loaded in later)
-            isPlaying: false, // Play state of sound
-            isDown: false // Is pad currently being pressed (key held down or click held down)
-        });
-    });</pre>
+    defaultSound = soundLibrary.manifest[i]; // Default sound for pad index i equals manifest index i
+    that.soundBank.push({
+        triggerPad: $(this).attr('data-button'), // Pad # is determined from attribute data-button of pad element
+        element: $(this), // jQuery instance of dom element
+        soundTitle: defaultSound.title, // Title of the sound
+        fileName: defaultSound.fileName, // Filename of the sound
+        soundId: defaultSound.id, // PreloadJs ID of sound
+        sLength: null, // Length of sound file (will be loaded in later)
+        isPlaying: false, // Play state of sound
+        isDown: false // Is pad currently being pressed (key held down or click held down)
+    });
+});</pre>
 <li>A function was created to handle playing the sounds and putting the info on the display. An interval was used to
-  update the progress.  Any text updating was faded in for realism. In order to fix an issue where if the same sound was having difficulty repeating rapidly, rather than replaying the sound, it was set back to the initial position
-The the associated soundbank is sent to the function
+  update the progress.  Any time text was updated, it was faded in for realism. Also, any sound being replayed too quickly
+  is sent back to that sound's initial position, rather than loading a new instance of the sound to play.
+  Finally, the associated soundbank is sent to the function.
 </li>
 <pre class="js">
 playSound: function(target){
-  // Clear interval for progress percentage
-  // Clear interval for progress bar
+    // Clear interval for progress percentage
+    // Clear interval for progress bar
     window.clearInterval(this.currentInterval);
     window.clearInterval(mpcDisplay.progressInterval);
     var that = this;
-  // Bugfix to allow repitition of the same sound quicker
+    // Bugfix to allow repitition of the same sound quicker
     if(target.soundId == this.currentId)
       // Set position to 0 rather than replayin sound
-        this.currentInstance.setPosition(0);
+      this.currentInstance.setPosition(0);
     else{
       // Play the sound: play (src, interrupt, delay, offset, loop, volume, pan)
       var instance = createjs.SoundJS.play(target.soundId, soundjs.INTERRUPT_ANY, 0, 0, false, 1);
@@ -400,8 +396,8 @@ playSound: function(target){
     target.isPlaying = true;
     // Draw the waveform ( returns the interval for progress)
     mpcDisplay.progressInterval = this.waveforms.drawSpecifiedWaveform(target.soundId,this.currentInstance.getDuration());
-  // After sound completed
-  instance.onComplete = function(instance) {
+    // After sound completed
+    instance.onComplete = function(instance) {
     // Stop remove lit class
         target.element.removeClass('playing');
         target.isPlaying = false;
@@ -415,8 +411,8 @@ playSound: function(target){
     }
 }</pre>
 <li>
-  Waveform-chrome JS was modified to support display of progress within the canvas as well as preloading.
-  So I preload each waveform and display when necessary.  See code for more on this
+  For an added touch of style, we modified Waveform-chrome to support display of the progress of a song within the canvas.
+  Each waveform is preloaded and displayed when necessary. See code for more details.
 </li>
 <pre class="js">
 preloadWaveforms:function(){
@@ -440,8 +436,7 @@ preloadWaveforms:function(){
 //                $('#status').text('Done')
         }
     })
-    }</pre>
-
+}</pre>
 </ol>
 </div>
 </div>

@@ -118,8 +118,8 @@
 #logo{
     color: white;
     background: url(../images/logo-white.png) no-repeat 0 0;
-    position: relative;
-    top: 0;
+/*    position: relative;
+    top: 0;*/
     float: left;
     margin: 0 10px;
     width: 127px;
@@ -135,6 +135,8 @@
     font-size: 29px;
     float: right;
     color: red;
+    font-weight: 100;
+    font-style: normal;
 }
 .lightText {
     font-family: arial;
@@ -167,13 +169,14 @@
     left: 2px;
     margin: 10px;
     width:94%;
-    height:66%;
+    height:69%;
 }
 
 /* These are for the three (or five) action buttons, right below the display. Also includes logo and model logo */
 #subBtnDrawArea {
-    height: 66px;
+    height: 44px;
     width: 100%;
+    float: left;
 }
 
 /* Common features of all buttons on the MPC, such as color and the shadow */
@@ -196,7 +199,8 @@
     border-radius: 6px;
     height: 0.5px;
     width: 50px;
-    display: inline-block;
+    /*display: inline-block;*/
+    display: none;
     float: none;
     margin: 0 auto;
     padding:11.5px 0;
@@ -208,7 +212,8 @@
 /* The three action buttons directly below the display */
 #softBtns {
     height: 30px;
-    display: table;
+    /*display: table;*/
+    display: none;
     width: 100%;
 }
 
@@ -337,11 +342,12 @@ ol.snippet-num, li{
 }
 .tutHeader{
     text-align: center;
+    padding-bottom: 10px;
 }
 .tutHeader h1{
     color: #00A2E3;
 }
-.tutHeader a{
+a{
     color: #00A2E3;
 }
 .tutContent{
@@ -352,7 +358,7 @@ ol.snippet-num, li{
 /* Surrounds both the MPC and the tutorial divs */
 #wrapper{
     width: 920px;
-    height: 610px;
+    height: 592px;
     margin: auto;
 }
 #loadingMsg {
