@@ -255,6 +255,7 @@ mpcDisplay = Class.extend({
                 $("#tutDescription").animate({
                     width: "100%"
                 }, 1000);
+                $("#description").hide();
                 $(".tutContent").fadeIn(1000);
                 $("#tutLink").html("Click here to collapse the tutorial");
             });
@@ -262,6 +263,7 @@ mpcDisplay = Class.extend({
             $(".tutContent").fadeOut(500, function(){
                 $("#tutDescription").animate({width: "49%"}, 1000, function(){
                     $(".mpc-wrapper").fadeIn(500);
+                    $("#description").show();
                     $("#tutLink").html("Click here to see the tutorial");
                 });
             });

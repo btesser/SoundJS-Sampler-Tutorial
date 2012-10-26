@@ -337,7 +337,7 @@ ol.snippet-num, li{
     width: 49%;
     float: right;
     padding: 6px 15px;
-    overflow-y: scroll;
+    overflow-y: auto;
     font-family: "HelveticaNeue", "Helvetica Neue", Helvetica, Arial, sans-serif;
 }
 .tutHeader{
