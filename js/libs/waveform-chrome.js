@@ -27,31 +27,32 @@ var mpcDisplay, waveformElements = {
     this.numFiles = fileArray.length;
     this.numFilesLoaded = 0;
     this.doneLoading = false;
-      $.each(fileArray,function(){
+      $.each(fileArray,function(i){
           var currentReq;
           currentReq = new XMLHttpRequest();
           currentReq.open('GET', this, true);
           currentReq.responseType = 'arraybuffer';
+          currentReq.i = i;
           currentReq.onprogress = function(e) {
               return typeof onStatus === "function" ? onStatus(e.loaded / e.total) : void 0;
           };
           // When loading is complete
           currentReq.onload = function() {
               // add request to requests array
-              that.reqs.push(currentReq);
+              that.reqs[this.i] = this;
               that.numFilesLoaded++;
               if (that.numFilesLoaded >= that.numFiles){
                 that.doneLoading = true;
                 loadingCallback();
               }
-              return loadBuffer(currentReq.response);
+              return loadBuffer(this.response,i);
           };
           // initialize the request
           currentReq.send();
 
       });
 
-    loadBuffer = function(arr) {
+    loadBuffer = function(arr, iter) {
 
       console.log(arr);
       var audio, buf;
@@ -60,7 +61,7 @@ var mpcDisplay, waveformElements = {
 // Disable internal playback in favor of Sound JS for playback
 
         // Add buffer to array of buffers
-        waveformElements.bufs.push(buf);
+        waveformElements.bufs[iter] = buf;
         return typeof onReady === "function" ? onReady() : void 0;
     };
 //    this.self = self;
