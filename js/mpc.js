@@ -238,15 +238,7 @@ mpcDisplay = Class.extend({
             status: $('#status'), // Status div for
             colorOne: '#DBD2E8',
             colorTwo: '#7857A5',
-            loadingCallback: function(){
-
-            },
-            onStatus: function(x) {
-//                $('#status').text('Loading '+Math.floor(x*100)+'%')
-            },
-            onReady: function() {
-//                $('#status').text('Done')
-            }
+            loadingCallback: function(){}
         })
     },
     switch:function(){
